@@ -1,0 +1,7 @@
+# Ejecutables
+programa.exe
+programa
+
+# Archivos compilados
+*.o
+*.out
