@@ -38,7 +38,9 @@ public:
     std::vector<Estudiante> getTop10Estudiantes();
 
     // ─── Reporte 4: Mayor Reprobación ─────────────────────────────────────
-    double  getPorcentajeReprobacion(int codigoCurso);
+    double  getPorcentajeReprobacion        (int codigoCurso);
+    int     getAprobadosPorCurso            (int codigoCurso);
+    int     getReprobadosPorCurso           (int codigoCurso);
     std::vector<Curso> getCursosOrdenadosPorReprobacion();
 
     // ─── Reporte 5: Análisis por Carrera ──────────────────────────────────

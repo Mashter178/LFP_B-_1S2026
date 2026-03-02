@@ -2,7 +2,7 @@
 #include "../data/io/FileReader.h"
 #include <iostream>
 #include <cstdlib>
-#include <filesystem>  // Para listar archivos
+#include <filesystem>
 
 namespace fs = std::filesystem;
 
@@ -67,7 +67,6 @@ void Menu::mostrar() {
 std::string Menu::elegirArchivo() {
     std::vector<std::string> archivos;
 
-    // Listar archivos .lfp en la carpeta test/
     for (fs::directory_entry entry : fs::directory_iterator("test")) {
         if (entry.path().extension() == ".lfp") {
             archivos.push_back(entry.path().filename().string());
@@ -79,13 +78,11 @@ std::string Menu::elegirArchivo() {
         return "";
     }
 
-    // Mostrar archivos disponibles
     std::cout << "\n  Archivos disponibles en test/:" << std::endl;
     for (int i = 0; i < archivos.size(); i++) {
         std::cout << "  " << (i + 1) << ". " << archivos[i] << std::endl;
     }
 
-    // Pedir seleccion
     int seleccion;
     std::cout << "\n  Elige un archivo (1-" << archivos.size() << "): ";
     std::cin >> seleccion;
@@ -99,11 +96,9 @@ std::string Menu::elegirArchivo() {
 }
 
 void Menu::actualizarController() {
-    // Eliminar controller y reporte anteriores
     delete controller;
     delete reporte;
 
-    // Crear nuevos con los datos actualizados
     controller = new DataController(estudiantes, cursos, notas);
     reporte    = new ReporteHTML(*controller, "output");
 }

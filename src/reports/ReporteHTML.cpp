@@ -5,7 +5,6 @@
 // ─── Constructor ──────────────────────────────────────────────────────────────
 ReporteHTML::ReporteHTML(DataController& controller, const std::string& carpetaOutput) 
     : controller(controller), carpetaOutput(carpetaOutput) {
-    // Crear carpeta output/ si no existe
     std::filesystem::create_directories(carpetaOutput);
 }
 
@@ -92,8 +91,8 @@ void ReporteHTML::generarRendimientoPorEstudiante(const std::vector<Estudiante>&
 
     archivo << "  <table>"                         << std::endl;
     archivo << "    <tr>"                          << std::endl;
-    archivo << "      <th>Carnet</th>"             << std::endl;
     archivo << "      <th>Nombre</th>"             << std::endl;
+    archivo << "      <th>Carnet</th>"             << std::endl;
     archivo << "      <th>Carrera</th>"            << std::endl;
     archivo << "      <th>Semestre</th>"           << std::endl;
     archivo << "      <th>Promedio</th>"           << std::endl;
@@ -106,8 +105,8 @@ void ReporteHTML::generarRendimientoPorEstudiante(const std::vector<Estudiante>&
         double promedio = controller.getPromedioEstudiante(e.carnet);
 
         archivo << "    <tr>"                                                                      << std::endl;
-        archivo << "      <td>" << e.carnet                                               << "</td>" << std::endl;
         archivo << "      <td>" << e.nombre << " " << e.apellido                          << "</td>" << std::endl;
+        archivo << "      <td>" << e.carnet                                               << "</td>" << std::endl;
         archivo << "      <td>" << e.carrera                                              << "</td>" << std::endl;
         archivo << "      <td>" << e.semestre                                             << "</td>" << std::endl;
         archivo << "      <td class='" << (promedio >= 61 ? "aprobado" : "reprobado") << "'>"       << std::endl;
@@ -180,8 +179,8 @@ void ReporteHTML::generarCursosMayorReprobacion(const std::vector<Curso>& cursos
 
     for (Curso c : ordenados) {
         int total      = controller.getCantEstudiantesCurso(c.codigo);
-        int reprobados = total - (total * controller.getPorcentajeReprobacion(c.codigo) / 100);
-        int aprobados  = total - reprobados;
+        int aprobados  = controller.getAprobadosPorCurso(c.codigo);
+        int reprobados = controller.getReprobadosPorCurso(c.codigo);
 
         archivo << "    <tr>"                                                              << std::endl;
         archivo << "      <td>" << c.codigo                                      << "</td>" << std::endl;
@@ -220,7 +219,6 @@ void ReporteHTML::generarAnalisisPorCarrera() {
         std::vector<Estudiante> estudiantesCarrera = controller.getEstudiantesPorCarrera(carrera);
         std::vector<Curso>      cursosCarrera      = controller.getCursosPorCarrera(carrera);
 
-        // Distribucion por semestre
         std::string distribucion = "";
         for (int s = 1; s <= 10; s++) {
             int cantidad = 0;
