@@ -1,9 +1,13 @@
 #include "ReporteHTML.h"
 #include <iostream>
+#include <filesystem>
 
 // ─── Constructor ──────────────────────────────────────────────────────────────
 ReporteHTML::ReporteHTML(DataController& controller, const std::string& carpetaOutput) 
-    : controller(controller), carpetaOutput(carpetaOutput) {}
+    : controller(controller), carpetaOutput(carpetaOutput) {
+    // Crear carpeta output/ si no existe
+    std::filesystem::create_directories(carpetaOutput);
+}
 
 // ─── Utilidades HTML ──────────────────────────────────────────────────────────
 bool ReporteHTML::crearArchivo(std::ofstream& archivo, const std::string& nombreArchivo) {

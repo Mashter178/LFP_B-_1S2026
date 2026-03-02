@@ -158,7 +158,7 @@ std::vector<Estudiante> DataController::getTop10Estudiantes() {
 
     // Tomar solo los primeros 10
     if (ordenados.size() > 10) {
-        ordenados.resize(10);
+        ordenados.erase(ordenados.begin() + 10, ordenados.end());
     }
 
     return ordenados;

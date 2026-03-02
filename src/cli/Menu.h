@@ -40,6 +40,7 @@ private:
     // ─── Utilidades ───────────────────────────────────────────────────────
     void actualizarController();
     bool verificarDatos();
+    std::string elegirArchivo();
 };
 
 #endif
